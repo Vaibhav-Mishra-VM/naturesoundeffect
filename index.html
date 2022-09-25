@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        * {
+            margin: 0px;
+            padding: 0px;
+        }
+
+        video {
+            background-color: black;
+        }
+
+        
+
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            width: 100%;
+            height: 100vh;
+            position: fixed;
+            background-color: black;
+            -webkit-user-select: none;
+            -khtml-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        .st1 {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            top: -10px;
+            left: -50px;
+            background-color: orange;
+            position: absolute;
+        }
+
+        .st2 {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            bottom: -10px;
+            right: -50px;
+            background-color: orange;
+            position: absolute;
+        }
+
+        .st3 {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            top: 10px;
+            left: 200px;
+            background-color: orange;
+            position: absolute;
+        }
+
+        .st4 {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            top: 100px;
+            left: 170px;
+            background-color: orange;
+            position: absolute;
+        }
+
+        .container {
+            width: 90%;
+            height: 90vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            overflow-y: scroll;
+            border-radius: 10px;
+            background: linear-gradient(to bottom, rgba(255, 255, 255, 0.50), rgba(255, 255, 255, 0.25));
+            -webkit-backdrop-filter: blur(5px);
+            backdrop-filter: blur(5px);
+        }
+
+        .close {
+            width: 50px;
+            height: 50px;
+            color: white;
+            font-size: 30px;
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+            position: absolute;
+            top: 10px;
+            left: 20px;
+            display: none;
+            cursor: pointer;
+            z-index: 1000000000;
+        }
+
+        .card {
+            min-width: 50%;
+            gap: 100px;
+            border-radius: 40px;
+            min-height: 70px;
+            background-color: white;
+            transition: ease-in-out;
+            display: flex;
+            align-items: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            padding-left: 20px;
+            font-size: 20px;
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+            cursor: pointer;
+            z-index: 1;
+        }
+
+        .ef1 {
+            display: none;
+            width: 0%;
+            height: 0vh;
+            position: absolute;
+            border-radius: 50%;
+            background-color: orange;
+            z-index: 1;
+        }
+
+        .ef1.active {
+            display: flex;
+            animation: increase ease;
+            animation-duration: 1s;
+            width: 300%;
+            height: 300vh;
+        }
+
+        @keyframes increase {
+            0% {
+                width: 0%;
+                height: 0vh;
+            }
+
+            100% {
+                width: 300%;
+                height: 300vh;
+            }
+        }
+
+
+        .ef2 {
+            display: none;
+            width: 0%;
+            height: 0vh;
+            position: absolute;
+            border-radius: 50%;
+            background-color: black;
+            z-index: 100;
+
+        }
+
+        .ef2.active {
+            display: flex;
+            animation: increase2 ease;
+            animation-duration: 2s;
+            width: 300%;
+            height: 300vh;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+
+        @keyframes increase2 {
+            0% {
+                width: 0%;
+                height: 0vh;
+            }
+
+            100% {
+                width: 300%;
+                height: 300vh;
+            }
+        }
+
+        ::-webkit-scrollbar {
+            width: 0px;
+        }
+
+        .card.active {
+            width: 100%;
+            padding: 0px;
+            height: 100vh;
+            position: absolute;
+            top: 0px;
+        }
+
+        #vid {
+            position: absolute;
+            display: none;
+            width: 100%;
+            height: 100vh;
+            background-color: white;
+            pointer-events: none;
+            z-index: 10000000;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            margin: auto;
+        }
+
+        .message {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            margin: auto;
+            width: 300px;
+            height: 400px;
+            background-color: orange;
+            border-radius: 20px;
+            z-index: 10000;
+            display: none;
+            align-items: center;
+            flex-direction: column;
+            justify-content: center;
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+            text-align: center;
+        }
+
+        .msg-btn {
+            margin-top: 20px;
+            padding-left: 20px;
+            padding-right: 20px;
+            padding-top: 5px;
+            padding-bottom: 5px;
+            background-color: black;
+            color: orange;
+            border-radius: 20px;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+    <title>Sound Effects List Project By VM</title>
+</head>
+
+<body>
+    <div class="vid" id="vid"></div>
+
+    <span class="close" id="close">X</span>
+
+    <span class="message" id="msg">
+        <img src="/images/headphone.svg" width="40px" alt="">
+        <br>
+        Use Headphones For Better Experience !!
+
+        <button class="msg-btn" id="ok">OK</button>
+    </span>
+
+    <div class="ef1" id="layer1"></div>
+    <div class="ef2" id="layer2"></div>
+
+
+    <div class="st1"></div>
+    <div class="st2"></div>
+    <div class="st3"></div>
+    <div class="st4"></div>
+
+    <div class="container">
+
+        <br>
+        <div class="card" onclick="clickon('/images/rain_video.mp4','/images/rain.wav')" id="rain"
+            imlk="/files/rain.jpg">
+            Rain
+        </div>
+        <br>
+        <div class="card" onclick="clickon('/images/fire_video.mp4','/images/fire.mp3')" id="fire">
+            Fire
+        </div>
+        <br>
+        <div class="card" onclick="clickon('/images/morning.mp4','/images/morning.mp3')" id="thunder">Morning</div>
+        <br>
+
+
+    </div>
+
+
+    <script>
+        let rain_card = document.getElementById('rain')
+        let close_btn = document.getElementById('close')
+        let vid = document.getElementById('vid')
+
+        function clickon(vid, audi) {
+            document.getElementById('layer1').classList.add('active')
+            document.getElementById('layer2').classList.add('active')
+
+            setTimeout(() => {
+                document.getElementById('vid').style.display = 'flex';
+                document.getElementById('vid').innerHTML = `
+                <video src="${vid}" muted autoplay loop  width="100%" height="100%"></video>
+                <audio src="${audi}" autoplay loop></audio>
+                `
+                close_btn.style.display = 'flex';
+            }, 700);
+            close_btn.onclick = () => {
+                document.getElementById('vid').innerHTML = ''
+                document.getElementById('vid').style.display = 'none';
+                close_btn.style.display = 'none';
+                document.getElementById('layer1').classList.remove('active')
+                document.getElementById('layer2').classList.remove('active')
+            }
+        }
+
+        setTimeout(() => {
+            document.getElementById('msg').style.display = 'flex';
+        }, 2000);
+
+        document.getElementById('ok').onclick = () => {
+            document.getElementById('msg').style.display = 'none';
+        }
+    </script>
+
+</body>
+
+</html>
